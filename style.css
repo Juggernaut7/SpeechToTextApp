@@ -1,0 +1,99 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #fff;
+}
+
+.container {
+    text-align: center;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    width: 80%;
+    max-width: 500px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.icon-btn {
+    font-size: 80px;
+    color: #4CAF50;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+textarea {
+    margin-top: 20px;
+    width: 100%;
+    height: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-size: 18px;
+    background: #f9f9f9;
+    color: #333;
+    resize: none;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#saved-transcripts {
+    margin-top: 20px;
+}
+
+#transcript-list {
+    list-style: none;
+    padding: 0;
+}
+
+#transcript-list li {
+    margin: 5px 0;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-btn {
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff0000;
+    transition: color 0.3s ease;
+}
+
+.delete-btn:hover {
+    color: #ff4d4d;
+}
+
+.hidden {
+    display: none;
+}

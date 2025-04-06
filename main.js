@@ -13,8 +13,6 @@ const transcriptList = document.getElementById('transcript-list');
 // === Global State ===
 let offlineMode = false; 
 let speaker = "Speaker 1"; 
-let mediaRecorder; 
-let audioChunks = []; 
 
 // === Initialize Speech Recognition API ===
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition;
@@ -22,28 +20,6 @@ const recognition = new SpeechRecognition();
 recognition.continuous = true;
 recognition.interimResults = true;
 recognition.lang = "en-US"; // Default language
-
-// === Initialize Audio Context for Noise Detection ===
-const audioContext = new AudioContext();
-navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-    const source = audioContext.createMediaStreamSource(stream);
-    const analyser = audioContext.createAnalyser();
-    source.connect(analyser);
-    analyser.fftSize = 2048;
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-    // Update noise level every 500ms
-    setInterval(() => {
-        analyser.getByteFrequencyData(dataArray);
-        const noiseLevel = dataArray.reduce((a, b) => a + b) / dataArray.length;
-        output.placeholder = `Noise Level: ${noiseLevel.toFixed(2)}`;
-    }, 500);
-
-    // Setup MediaRecorder for timestamped playback
-    mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-    mediaRecorder.onstop = saveAudioWithTranscript;
-}).catch(err => console.error("Audio setup error:", err));
 
 // === Event Handlers ===
 
@@ -53,12 +29,11 @@ recognition.onstart = () => {
     output.textContent = "Listening...";
 };
 
-// Process speech results with formatting, speaker ID, and translation
+// Process speech results with formatting and speaker ID
 recognition.onresult = async (event) => {
     let transcript = event.results[event.results.length - 1][0].transcript.trim();
     transcript = transcript.charAt(0).toUpperCase() + transcript.slice(1) + (transcript.endsWith(".") ? "" : ".");
     const timestamp = new Date().toLocaleTimeString();
-    // const translated = await translateText(transcript.split(" ").slice(1).join(" ")); 
     output.textContent = `${timestamp} - ${speaker}: ${transcript}\n`;
     handleVoiceCommands(transcript.toLowerCase());
 };
@@ -78,11 +53,10 @@ startButtonListening.addEventListener("click", () => {
     } else {
         recognition.lang = languageSelector.value;
         recognition.start();
-        mediaRecorder.start();
     }
 });
 
-// Stop listening and recording
+// Stop listening
 stopButtonListening.addEventListener("click", stopListening);
 
 // Save transcript manually
@@ -128,10 +102,9 @@ function toggleListening(isListening) {
     speakFeedback(isListening ? "Listening..." : "Stopped listening.");
 }
 
-// Stop recognition and audio recording
+// Stop recognition
 function stopListening() {
     recognition.stop();
-    mediaRecorder.stop();
     toggleListening(false);
     output.textContent = "Stopped listening.";
     speakFeedback("Stopped listening.");
@@ -149,26 +122,6 @@ function saveTranscript() {
     transcriptList.appendChild(transcriptItem);
 }
 
-// Save audio and link to transcript for playback
-function saveAudioWithTranscript() {
-    const audioBlob = new Blob(audioChunks);
-    const audioUrl = URL.createObjectURL(audioBlob);
-    output.textContent.split("\n").forEach(line => {
-        if (line.includes(":")) {
-            const [time, text] = line.split(": ", 2);
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="${audioUrl}" onclick="new Audio('${audioUrl}').play()">${time}</a>: ${text}`;
-            const deleteBtn = document.createElement("span");
-            deleteBtn.classList.add("delete-btn");
-            deleteBtn.textContent = "❌";
-            deleteBtn.addEventListener("click", () => transcriptList.removeChild(li));
-            li.appendChild(deleteBtn);
-            transcriptList.appendChild(li);
-        }
-    });
-    audioChunks = [];
-}
-
 // Export transcript as text file
 function exportTranscript() {
     const blob = new Blob([output.textContent], { type: 'text/plain' });
@@ -177,22 +130,6 @@ function exportTranscript() {
     link.download = 'transcription.txt';
     link.click();
 }
-
-// Translate text using a free API 
-// async function translateText(text, targetLang = "en") {
-//     try {
-//         const response = await fetch(`https://github.com/argosopentech/argos-translate`, {
-//             method: "POST",
-//             body: JSON.stringify({ q: text, source: recognition.lang.split("-")[0], target: targetLang }),
-//             headers: { "Content-Type": "application/json" }
-//         });
-//         const data = await response.json();
-//         return data.translatedText || "Translation unavailable";
-//     } catch (err) {
-//         console.error("Translation error:", err);
-//         return "Translation failed";
-//     }
-// }
 
 // Provide audio feedback for accessibility
 function speakFeedback(text) {

@@ -6,12 +6,11 @@
     <title>Speech to Text</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <body>
     <div class="onboarding" id="onboarding">
         <h2>Welcome to the Speech to Text App!</h2>
-        <p>This application lets you convert speech into text in real-time. You can choose different languages, save transcripts, export them, or even control the app using voice commands like "save this", "export", or "stop listening".</p>
+        <p>This application converts speech to text in real-time with features like multilingual support, speaker identification, auto-translation, offline mode, and accessibility options. Use voice commands like "save this", "export", or "stop listening" to control it!</p>
         <button onclick="closeOnboarding()">Get Started</button>
     </div>
 
@@ -42,9 +41,12 @@
                 <option value="de-DE">German</option>
             </select>
         </div>
-        <textarea id="output" rows="10" cols="30" readonly></textarea>
+        <textarea id="output" rows="10" cols="30" readonly placeholder="Noise Level: N/A"></textarea>
         <button id="save-btn">Save Transcript</button>
         <button id="export-btn">Export</button>
+        <button id="copy-btn">Copy to Clipboard</button>
+        <button id="offline-toggle">Offline Mode: OFF</button>
+        <button id="contrast-toggle">High Contrast</button>
         <div id="saved-transcripts">
             <h3>Saved Transcripts</h3>
             <ul id="transcript-list"></ul>
@@ -52,6 +54,5 @@
     </div>
 
     <script src="main.js"></script>
-
 </body>
 </html>

@@ -158,6 +158,12 @@ button:hover {
     background-color: #388e3c;
 }
 
+#transcript-list a {
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .delete-btn {
     cursor: pointer;
     font-size: 18px;
@@ -171,6 +177,16 @@ button:hover {
 
 .hidden {
     display: none;
+}
+
+.high-contrast {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+.high-contrast .container {
+    background: #222 !important;
+    color: #fff !important;
 }
 
 @keyframes fadeIn {
@@ -292,6 +308,7 @@ button:hover {
         font-size: 16px;
     }
 }
+
 /* ---------- Large Screens (>= 1200px) ---------- */
 @media (min-width: 1200px) {
     .onboarding {

@@ -6,9 +6,16 @@
     <title>Speech to Text</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
-    <div class="container">
+    <div class="onboarding" id="onboarding">
+        <h2>Welcome to the Speech to Text App!</h2>
+        <p>This application lets you convert speech into text in real-time. You can choose different languages, save transcripts, export them, or even control the app using voice commands like "save this", "export", or "stop listening".</p>
+        <button onclick="closeOnboarding()">Get Started</button>
+    </div>
+
+    <div class="container hidden" id="app">
         <h1>Speech to Text</h1>
         <div id="start-btn" class="icon-btn">
             <i class="fas fa-microphone"></i> 
@@ -20,6 +27,16 @@
             <label for="language">Choose Language: </label>
             <select id="language">
                 <option value="en-US">English</option>
+                <option value="yo-NG">Yoruba</option>
+                <option value="ha-NG">Hausa</option>
+                <option value="ig-NG">Igbo</option>
+                <option value="pt-BR">Portuguese</option>
+                <option value="ar-EG">Arabic</option>
+                <option value="it-IT">Italian</option>
+                <option value="ja-JP">Japanese</option>
+                <option value="ko-KR">Korean</option>
+                <option value="ru-RU">Russian</option>
+                <option value="zh-CN">Chinese</option>
                 <option value="es-ES">Spanish</option>
                 <option value="fr-FR">French</option>
                 <option value="de-DE">German</option>
@@ -31,13 +48,10 @@
         <div id="saved-transcripts">
             <h3>Saved Transcripts</h3>
             <ul id="transcript-list"></ul>
-        </div>
-        <div class="alert">
-
-        </div>
+        </div> 
     </div>
 
     <script src="main.js"></script>
+
 </body>
 </html>
-`                                                           ``

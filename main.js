@@ -1,17 +1,17 @@
 // ==== Element References ====
-const startButtonListening = document.getElementById('start-btn'); // Button to start voice recognition
-const stopButtonListening = document.getElementById('stop-btn'); // Button to stop voice recognition
-const output = document.getElementById('output'); // Area to display real-time transcriptions and feedback
-const languageSelector = document.getElementById('language'); // Dropdown to select language for recognition
+const startButtonListening = document.getElementById('start-btn'); 
+const stopButtonListening = document.getElementById('stop-btn');
+const output = document.getElementById('output'); 
+const languageSelector = document.getElementById('language'); 
 const saveButton = document.getElementById('save-btn'); // Button to save transcript to list
-const exportButton = document.getElementById('export-btn'); // Button to export transcript as a file
-const transcriptList = document.getElementById('transcript-list'); // List to display saved transcripts
+const exportButton = document.getElementById('export-btn');
+const transcriptList = document.getElementById('transcript-list');
 
 // ==== Initialize Speech Recognition API ====
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition;
 const recognition = new SpeechRecognition();
-recognition.continuous = true; // Keep listening until explicitly stopped
-recognition.interimResults = true; // Show results as the user is speaking
+recognition.continuous = true; 
+recognition.interimResults = true; 
 recognition.lang = "en-US"; // Default language
 
 // ==== Event: Speech Recognition Started ====
